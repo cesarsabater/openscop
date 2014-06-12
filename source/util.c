@@ -508,6 +508,40 @@ char * osl_util_strdup(char const * str) {
   return dup;
 }
 
+/**
+ * osl_util_strclean function: 
+ * ...
+ */ 
+char * osl_util_strcleanq(char const * str) { 
+	char * dup = NULL;
+		
+	if (str == NULL && strlen(str) <= 0) 
+		OSL_error("Trying to clean null or empty string");
+	if (str[0] != '"' || str[strlen(str)-1] != '"') 
+		OSL_error("Trying to clean string without quotes");
+	dup = strdup(str+1);
+	dup[strlen(dup)-1] = '\0'; 
+	return dup;
+}
+
+/**
+ * osl_util_sreadl function: 
+ * ..
+ */
+void osl_util_sreadl(char **s, char *t) 
+{
+	if ((*s)[0] == '\0') 
+		OSL_error("part of the input is missing"); 
+
+	while(**s != '\n' && **s != '\0')  {
+		*t = **s;
+		t++ ; (*s)++;
+	}
+	if (**s == '\n') 
+		(*s)++; 
+	*t = '\0';
+}
+
 
 /**
  * osl_util_get_precision function:

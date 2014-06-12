@@ -112,7 +112,7 @@ int test_file(char* input_name, int verbose) {
   }
   input_scop = osl_scop_read(input_file);
   fclose(input_file);
-  
+    
   if (verbose)
     printf("- reading file succeeded\n");
 

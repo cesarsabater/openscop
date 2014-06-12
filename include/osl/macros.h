@@ -67,7 +67,7 @@
 # include "util.h"
 
 
-# define OSL_DEBUG                 0       // 1 for debug mode, 0 otherwise.
+# define OSL_DEBUG                 1       // 1 for debug mode, 0 otherwise.
 
 # define OSL_URI_SCOP              "OpenScop"
 

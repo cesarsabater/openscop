@@ -2,9 +2,9 @@
     /*+-----------------------------------------------------------------**
      **                       OpenScop Library                          **
      **-----------------------------------------------------------------**
-     **                            util.h                               **
+     **                     extensions/doi.h                            **
      **-----------------------------------------------------------------**
-     **                   First version: 08/10/2010                     **
+     **                   First version: 22/05/2014                     **
      **-----------------------------------------------------------------**
 
  
@@ -61,11 +61,12 @@
  *****************************************************************************/
 
 
-#ifndef OSL_UTIL_H
-# define OSL_UTIL_H
+#ifndef OSL_DOI_LIST_H
+# define OSL_DOI_LIST_H
 
 # include <stdio.h>
-
+# include <osl/interface.h>
+# include <osl/util.h>
 
 # if defined(__cplusplus)
 extern "C"
@@ -73,31 +74,64 @@ extern "C"
 # endif
 
 
+# define OSL_URI_DOI_LIST      "doi"
+
+ 
+/**
+ * The osl_doi structure stores a an extention to handle a list of
+ * Domains of Interest that modify how the computation is done for 
+ * some subspaces of the original domain
+ */
+
+struct osl_doi { 
+	int priority;  					/** Prioriy among other domains of interest. */ 
+	char * dom;      				/** Domain codified in polihedral equations  */ 
+	char * comp;        		/** Computation that should be done in the domain */ 
+	void * user; 							/** User purpose pointer */ 
+	struct osl_doi * next;	/** If there are muliple DOIs, the next DOI  */
+	
+}; 
+
+typedef struct osl_doi   osl_doi_t;
+typedef struct osl_doi * osl_doi_p;
+
+
 /*+***************************************************************************
- *                            Utility functions                              *
+ *                          Structure display function                       *
  *****************************************************************************/
-char * osl_util_skip_blank_and_comments(FILE *, char *);
-void   osl_util_sskip_blank_and_comments(char **);
-int    osl_util_read_int(FILE *, char **);
-char * osl_util_read_string(FILE *, char **);
-char * osl_util_read_line(FILE *, char **);
-char * osl_util_read_tag(FILE *, char **);
-char * osl_util_read_tail(FILE *);
-char * osl_util_read_uptoflag(FILE *, char **, char *);
-char * osl_util_read_uptotag(FILE *, char **, char *);
-char * osl_util_read_uptoendtag(FILE *, char **, char *);
-char * osl_util_tag_content(char *, char *);
-void   osl_util_safe_strcat(char **, char *, int *);
-char * osl_util_strdup(char const *);
-char * osl_util_strcleanq(char const *);
-void   osl_util_sreadl(char **s, char *t); 
-int    osl_util_get_precision();
-void   osl_util_print_provided(FILE *, int, char *);
-char * osl_util_identifier_substitution(char *, char **);
+void            osl_doi_idump(FILE *, osl_doi_p, int);
+void            osl_doi_dump(FILE *, osl_doi_p);
+char *          osl_doi_sprint(osl_doi_p);
+
+
+/*****************************************************************************
+ *                               Reading function                            *
+ *****************************************************************************/
+osl_doi_p   osl_doi_sread_e(char *, char **);
+osl_doi_p   osl_doi_sread(char **);
+
+
+/*+***************************************************************************
+ *                    Memory allocation/deallocation function                *
+ *****************************************************************************/
+osl_doi_p   	osl_doi_malloc();
+osl_doi_p					osl_doi_malloc();
+void            	osl_doi_free(osl_doi_p);
+
+
+/*+***************************************************************************
+ *                            Processing functions                           *
+ *****************************************************************************/
+osl_doi_p  	osl_doi_clone_e(osl_doi_p);
+osl_doi_p  	osl_doi_clone(osl_doi_p);
+int             	osl_doi_equal(osl_doi_p, osl_doi_p);
+int 							osl_doi_length(osl_doi_p);
+osl_doi_p 		osl_doi_concat(osl_doi_p, osl_doi_p);
+osl_interface_p osl_doi_interface();
 
 
 # if defined(__cplusplus)
   }
 # endif
 
-#endif /* define OSL_UTIL_H */
+#endif /* define OSL_DOI_H */
