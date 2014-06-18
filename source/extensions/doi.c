@@ -118,7 +118,10 @@ void osl_doi_idump(FILE * file, osl_doi_p doi, int level) {
 		osl_doi_indent(file, level+2);
 		fprintf(file, "\n");
 		osl_doi_indent(file, level+1);
-		fprintf(file, "+-- comp: %s\n", doi->comp);
+		if (doi->comp != NULL) 
+			fprintf(file, "+-- comp: %s\n", doi->comp);
+		else 
+			fprintf(file, "+-- NULL comp\n");
 		doi = doi->next; 
 	}
 	
@@ -135,7 +138,10 @@ void osl_doi_idump(FILE * file, osl_doi_p doi, int level) {
 		fprintf(file, "+-- dom: %s\n", doi->dom);
 		osl_doi_indent(file, level+2); fprintf(file, "\n");
 		osl_doi_indent(file, level+1);
-		fprintf(file, "+-- comp: %s\n", doi->comp);
+		if (doi->comp != NULL) 
+			fprintf(file, "+-- comp: %s\n", doi->comp);
+		else 
+			fprintf(file, "+-- NULL comp\n");
 		osl_doi_indent(file, level+2);
 		fprintf(file, "\n");
 		doi = doi->next; 
@@ -174,7 +180,12 @@ char * osl_doi_sprint(osl_doi_p doi) {
 	sprintf(string, "%d\n", osl_doi_length(doi)); 
 			
 	while (doi != NULL) {
-    sprintf(buffer, "%d\n%s\n%s\n", doi->priority, doi->dom, doi->comp);
+    sprintf(buffer, "# priority\n%d\n", doi->priority); 
+    osl_util_safe_strcat(&string, buffer, &high_water_mark);
+    sprintf(buffer, "# isl domain\n%s\n", doi->dom); 
+    osl_util_safe_strcat(&string, buffer, &high_water_mark);
+    sprintf(buffer, "# c computation\n%s\n", 
+			(doi->comp != NULL) ? doi->comp : OSL_DOI_NULL);
     osl_util_safe_strcat(&string, buffer, &high_water_mark);
     doi = doi->next;
   }
@@ -203,7 +214,8 @@ osl_doi_p osl_doi_sread_e(char *buffer, char **input) {
 		// read computation
 		osl_util_sskip_blank_and_comments(input);
 		osl_util_sreadl(input, buffer); 
-		doi->comp = osl_util_strdup(buffer);
+		if (strcmp(buffer, OSL_DOI_NULL) != 0) 
+			doi->comp = osl_util_strdup(buffer);
 		
 		return doi; 
 }
@@ -352,8 +364,8 @@ int osl_doi_equal(osl_doi_p d1, osl_doi_p d2) {
 	}
 	while (d1 != NULL && d2 != NULL) { 
 		if (! ((d1->priority == d2->priority) 
-					&& (strcmp(d1->dom, d2->dom) == 0)
-					&& (strcmp(d1->comp, d2->comp) == 0)) )	  
+					&& (osl_util_safe_strcmp(d1->dom, d2->dom) == 0)
+					&& (osl_util_safe_strcmp(d1->comp, d2->comp) == 0)  ))	  
 			return 0;
 			
 		d1 = d1->next; 
@@ -410,7 +422,7 @@ osl_doi_p osl_doi_concat(osl_doi_p d1, osl_doi_p d2) {
 osl_interface_p osl_doi_interface() {
   osl_interface_p interface = osl_interface_malloc();
   
-  OSL_strdup(interface->URI, OSL_URI_DOI_LIST);
+  OSL_strdup(interface->URI, OSL_URI_DOI);
   interface->idump  = (osl_idump_f)osl_doi_idump;
   interface->sprint = (osl_sprint_f)osl_doi_sprint;
   interface->sread  = (osl_sread_f)osl_doi_sread;

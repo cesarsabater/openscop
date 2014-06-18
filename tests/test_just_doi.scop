@@ -40,7 +40,7 @@ CONTEXT
 #domain
 [domain1]
 #computation
-{comp1}
+NULL
 #2ndt doi
 #priority
 2

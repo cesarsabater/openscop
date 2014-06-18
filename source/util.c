@@ -490,6 +490,26 @@ void osl_util_safe_strcat(char ** dst, char * src, int * hwm) {
   strcat(*dst, src);
 }
 
+/**
+ * osl_util_safe_strcmp function: 
+ * this funciton compares two strings with strcmp() function after 
+ * checking that they are not NULL, 
+ * \param[in] s1 the first string
+ * \param[in]	s2 the second string
+ * \return 			 the result of strcmp if both of them are not NULL
+ * 							 0 if they are equal or both NULL
+ * 							 1 if s2 is NULL, but not s1
+ * 							 -1 if s1 is NULL, but not s2
+ */ 
+int osl_util_safe_strcmp(char *s1, char *s2) { 
+	if (s1 == s2)
+		return 0; 
+	if (s1 != NULL && s2 != NULL) 
+		return strcmp(s1, s2);
+	if (s1 == NULL) 
+		return -1; 
+	return 1; 
+}
 
 /**
  * \brief String duplicate

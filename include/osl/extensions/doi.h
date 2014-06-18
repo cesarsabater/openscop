@@ -61,8 +61,8 @@
  *****************************************************************************/
 
 
-#ifndef OSL_DOI_LIST_H
-# define OSL_DOI_LIST_H
+#ifndef OSL_DOI_H
+# define OSL_DOI_H
 
 # include <stdio.h>
 # include <osl/interface.h>
@@ -74,7 +74,9 @@ extern "C"
 # endif
 
 
-# define OSL_URI_DOI_LIST      "doi"
+# define OSL_URI_DOI      "doi"
+
+# define OSL_DOI_NULL			"NULL"
 
  
 /**
