@@ -285,10 +285,10 @@ char * osl_relation_expression_element(osl_int_t val,
         if (osl_int_mone(precision, val)) {      // case -1
           sprintf(sval, "-%s", name);
         }
-	else {                                      // default case
-	  osl_int_sprint_txt(sval, precision, val);
-	  sprintf(temp, "*%s", name);
-	  strcat(sval, temp);
+  else {                                      // default case
+    osl_int_sprint_txt(sval, precision, val);
+    sprintf(temp, "*%s", name);
+    strcat(sval, temp);
         }
       }
       *first = 0;
@@ -299,10 +299,10 @@ char * osl_relation_expression_element(osl_int_t val,
       }
       else {
         sprintf(sval, "+");
-	osl_int_sprint_txt(temp, precision, val);
-	strcat(sval, temp);
-	sprintf(temp, "*%s", name);
-	strcat(sval, temp);
+  osl_int_sprint_txt(temp, precision, val);
+  strcat(sval, temp);
+  sprintf(temp, "*%s", name);
+  strcat(sval, temp);
       }
     }
   }
@@ -315,9 +315,9 @@ char * osl_relation_expression_element(osl_int_t val,
         if (!(*first)) {
           sprintf(sval, "+");
           osl_int_sprint_txt(temp, precision, val);
-	  strcat(sval, temp);
-	}
-	else {
+    strcat(sval, temp);
+  }
+  else {
           osl_int_sprint_txt(sval, precision, val);
         }
       }
@@ -1467,24 +1467,24 @@ osl_relation_p osl_relation_pread(FILE * foo, int precision) {
 
 /**
  * osl_relation_psread function ("precision read"):
- * this function is equivalent to osl_relation_poly_psread() except that
+ * this function is equivalent to osl_relation_psread_polylib() except that
  * it reads an the type of the relation before reading the rest of the
  * input. 
- * \see{osl_relation_poly_psread}
+ * \see{osl_relation_psread_polylib}
  */ 
 osl_relation_p osl_relation_psread(char ** input, int precision) {
-	int type;
-	osl_relation_p relation;
-	
-	type = osl_relation_read_type(NULL, input);
-	relation = osl_relation_poly_psread(input, precision);
-	relation->type = type; 
-	
-	return relation;
+  int type;
+  osl_relation_p relation;
+  
+  type = osl_relation_read_type(NULL, input);
+  relation = osl_relation_psread_polylib(input, precision);
+  relation->type = type; 
+  
+  return relation;
 }
 
 /**
- * osl_relation_poly_psread function ("precision read"):
+ * osl_relation_psread_polylib function ("precision read"):
  * this function reads a relation from a string complying to the Extended
  * PolyLib textual format and returns a pointer this relation. The input 
  * parameter is updated to the position in the input string this function 
@@ -1494,7 +1494,7 @@ osl_relation_p osl_relation_psread(char ** input, int precision) {
  * \param[in]     precision The precision of the relation elements.
  * \return A pointer to the relation structure that has been read.
  */
-osl_relation_p osl_relation_poly_psread(char ** input, int precision) {
+osl_relation_p osl_relation_psread_polylib(char ** input, int precision) {
   int i, j, k, n, read = 0;
   int nb_rows, nb_columns;
   int nb_output_dims, nb_input_dims, nb_local_dims, nb_parameters;
@@ -1515,15 +1515,15 @@ osl_relation_p osl_relation_poly_psread(char ** input, int precision) {
       // make a copy of the first line
       tmp = *input; 
       while ((*tmp != '\0') && (*tmp != '\n'))
-				tmp++;
-			strncpy(str, *input, sizeof(char) * (tmp-*input));
-			str[(tmp-*input)] = '\0'; 
-			
-			read = sscanf(str, " %d %d %d %d %d %d",
+        tmp++;
+      strncpy(str, *input, sizeof(char) * (tmp-*input));
+      str[(tmp-*input)] = '\0'; 
+      
+      read = sscanf(str, " %d %d %d %d %d %d",
           &nb_rows, &nb_columns,
           &nb_output_dims, &nb_input_dims,
           &nb_local_dims, &nb_parameters);
-			*input = tmp;
+      *input = tmp;
 
       if (((read != 1) && (read != 6)) ||
           ((read == 1) && (may_read_nb_union_parts != 1)))
@@ -1599,14 +1599,14 @@ osl_relation_p osl_relation_sread(char ** input) {
 
 /**
  * osl_relation_sread function:
- * this function is equivalent to osl_relation_poly_psread() except that
+ * this function is equivalent to osl_relation_psread_polylib() except that
  * the precision corresponds to the precision environment variable or
  * to the highest available precision if it is not defined.
- * \see{osl_relation_poly_psread}
+ * \see{osl_relation_posread_polylib}
  */
-osl_relation_p osl_relation_poly_sread(char ** input) { 
-	int precision = osl_util_get_precision(); 
-	return osl_relation_poly_psread(input, precision);
+osl_relation_p osl_relation_sread_polylib(char ** input) { 
+  int precision = osl_util_get_precision(); 
+  return osl_relation_psread_polylib(input, precision);
 }
 
 
