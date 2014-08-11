@@ -65,7 +65,7 @@
 #include <string.h>
 #include <osl/extensions/textual.h>
 #include <osl/extensions/comment.h>
-#include <osl/extensions/doi.h>
+#include <osl/extensions/spot.h>
 #include <osl/extensions/null.h>
 #include <osl/extensions/scatnames.h>
 #include <osl/extensions/arrays.h>
@@ -395,7 +395,7 @@ osl_interface_p osl_interface_get_default_registry() {
   // Extensions
   osl_interface_add(&registry, osl_textual_interface());
   osl_interface_add(&registry, osl_comment_interface());
-  osl_interface_add(&registry, osl_doi_interface());
+  osl_interface_add(&registry, osl_spot_interface());
   osl_interface_add(&registry, osl_null_interface());
   osl_interface_add(&registry, osl_scatnames_interface());
   osl_interface_add(&registry, osl_arrays_interface());

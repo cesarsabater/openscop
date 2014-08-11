@@ -99,7 +99,7 @@ pkgextensionsincludedir = $(pkgincludedir)/extensions
 pkgextensionsinclude_HEADERS = \
 	include/osl/extensions/textual.h \
 	include/osl/extensions/comment.h \
-	include/osl/extensions/doi.h \
+	include/osl/extensions/spot.h \
 	include/osl/extensions/null.h \
 	include/osl/extensions/clay.h \
 	include/osl/extensions/dependence.h \
@@ -123,7 +123,7 @@ libosl_la_SOURCES = \
 	source/statement.c \
 	source/extensions/textual.c \
 	source/extensions/comment.c \
-	source/extensions/doi.c \
+	source/extensions/spot.c \
 	source/extensions/null.c \
 	source/extensions/clay.c \
 	source/extensions/dependence.c \

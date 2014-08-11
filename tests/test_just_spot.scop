@@ -31,31 +31,31 @@ CONTEXT
 # Statement body is not provided
 0
 
-<doi>
-#Three DOIs Provided
+<spot>
+#Three SPOTs Provided
 3
-#1st doi
+#1st spot
 #priority
 1
 #domain
 [domain1]
 #computation
 NULL
-#2ndt doi
+#2ndt spot
 #priority
 2
 #domain
 [d2]
 #computation
 {c2}
-#3rd doi
+#3rd spot
 #priority
 3
 #domain
 [d3]
 #computation
 {c3}
-</doi> 
+</spot> 
 
 
 </OpenScop>

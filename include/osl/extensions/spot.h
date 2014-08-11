@@ -2,7 +2,7 @@
     /*+-----------------------------------------------------------------**
      **                       OpenScop Library                          **
      **-----------------------------------------------------------------**
-     **                     extensions/doi.h                            **
+     **                     extensions/spot.h                            **
      **-----------------------------------------------------------------**
      **                   First version: 22/05/2014                     **
      **-----------------------------------------------------------------**
@@ -61,8 +61,8 @@
  *****************************************************************************/
 
 
-#ifndef OSL_DOI_H
-# define OSL_DOI_H
+#ifndef OSL_SPOT_H
+# define OSL_SPOT_H
 
 # include <stdio.h>
 # include <osl/interface.h>
@@ -74,66 +74,66 @@ extern "C"
 # endif
 
 
-# define OSL_URI_DOI      "doi"
+# define OSL_URI_SPOT      "spot"
 
-# define OSL_DOI_NULL			"NULL"
+# define OSL_SPOT_NULL			"NULL"
 
  
 /**
- * The osl_doi structure stores a an extention to handle a list of
+ * The osl_spot structure stores a an extention to handle a list of
  * Domains of Interest that modify how the computation is done for 
  * some subspaces of the original domain
  */
 
-struct osl_doi { 
+struct osl_spot { 
 	int priority;  					/** Prioriy among other domains of interest. */ 
 	char * dom;      				/** Domain codified in polihedral equations  */ 
 	char * comp;        		/** Computation that should be done in the domain */ 
 	void * user; 							/** User purpose pointer */ 
-	struct osl_doi * next;	/** If there are muliple DOIs, the next DOI  */
+	struct osl_spot * next;	/** If there are muliple SPOTs, the next SPOT  */
 	
 }; 
 
-typedef struct osl_doi   osl_doi_t;
-typedef struct osl_doi * osl_doi_p;
+typedef struct osl_spot   osl_spot_t;
+typedef struct osl_spot * osl_spot_p;
 
 
 /*+***************************************************************************
  *                          Structure display function                       *
  *****************************************************************************/
-void            osl_doi_idump(FILE *, osl_doi_p, int);
-void            osl_doi_dump(FILE *, osl_doi_p);
-char *          osl_doi_sprint(osl_doi_p);
+void            osl_spot_idump(FILE *, osl_spot_p, int);
+void            osl_spot_dump(FILE *, osl_spot_p);
+char *          osl_spot_sprint(osl_spot_p);
 
 
 /*****************************************************************************
  *                               Reading function                            *
  *****************************************************************************/
-osl_doi_p   osl_doi_sread_e(char *, char **);
-osl_doi_p   osl_doi_sread(char **);
+osl_spot_p   osl_spot_sread_e(char *, char **);
+osl_spot_p   osl_spot_sread(char **);
 
 
 /*+***************************************************************************
  *                    Memory allocation/deallocation function                *
  *****************************************************************************/
-osl_doi_p   	osl_doi_malloc();
-osl_doi_p					osl_doi_malloc();
-void            	osl_doi_free(osl_doi_p);
+osl_spot_p   	osl_spot_malloc();
+osl_spot_p					osl_spot_malloc();
+void            	osl_spot_free(osl_spot_p);
 
 
 /*+***************************************************************************
  *                            Processing functions                           *
  *****************************************************************************/
-osl_doi_p  	osl_doi_clone_e(osl_doi_p);
-osl_doi_p  	osl_doi_clone(osl_doi_p);
-int             	osl_doi_equal(osl_doi_p, osl_doi_p);
-int 							osl_doi_length(osl_doi_p);
-osl_doi_p 		osl_doi_concat(osl_doi_p, osl_doi_p);
-osl_interface_p osl_doi_interface();
+osl_spot_p  	osl_spot_clone_e(osl_spot_p);
+osl_spot_p  	osl_spot_clone(osl_spot_p);
+int             	osl_spot_equal(osl_spot_p, osl_spot_p);
+int 							osl_spot_length(osl_spot_p);
+osl_spot_p 		osl_spot_concat(osl_spot_p, osl_spot_p);
+osl_interface_p osl_spot_interface();
 
 
 # if defined(__cplusplus)
   }
 # endif
 
-#endif /* define OSL_DOI_H */
+#endif /* define OSL_SPOT_H */

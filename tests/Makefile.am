@@ -101,7 +101,7 @@ osl_test_SOURCES = \
 	test_clay.scop \
 	test_no_statement.scop \
 	test_scop_list.scop \
-	test_just_doi.scop 
+	test_just_spot.scop 
 osl_int_SOURCES          = osl_int.c
 osl_pluto_unroll_SOURCES = osl_pluto_unroll.c
 

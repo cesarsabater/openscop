@@ -2,7 +2,7 @@
     /*+-----------------------------------------------------------------**
      **                       OpenScop Library                          **
      **-----------------------------------------------------------------**
-     **                     extensions/doi.c                       **
+     **                     extensions/spot.c                       **
      **-----------------------------------------------------------------**
      **                   First version: 22/05/2014                     **
      **-----------------------------------------------------------------**
@@ -67,7 +67,7 @@
 #include <osl/macros.h>
 #include <osl/util.h>
 #include <osl/interface.h>
-#include <osl/extensions/doi.h>
+#include <osl/extensions/spot.h>
 
 
 /*+***************************************************************************
@@ -76,118 +76,118 @@
 
 
 /**
- * osl_doi_idump function:
- * this function displays an osl_doi_t structure (*doi) into a
+ * osl_spot_idump function:
+ * this function displays an osl_spot_t structure (*spot) into a
  * file (file, possibly stdout) in a way that trends to be understandable. 
  * It includes an indentation level (level) in order to work with others
  * idump functions.
  * \param[in] file    The file where the information has to be printed.
- * \param[in] doi 		The doi_t structure to print.
+ * \param[in] spot 		The spot_t structure to print.
  * \param[in] level   Number of spaces before printing, for each line.
  */
 
-void osl_doi_indent(FILE * file,  int level) { 
+void osl_spot_indent(FILE * file,  int level) { 
 	int j;
 	for (j = 0; j < level; j++)
 		fprintf(file, "|\t");
 	
 }
  
-void osl_doi_idump(FILE * file, osl_doi_p doi, int level) {
+void osl_spot_idump(FILE * file, osl_spot_p spot, int level) {
 	
 
   // Go to the right level.
-	if (doi == NULL) { 
-		osl_doi_indent(file, level);
-    fprintf(file, "+-- NULL doi\n");
+	if (spot == NULL) { 
+		osl_spot_indent(file, level);
+    fprintf(file, "+-- NULL spot\n");
     return;
 	}
 	  
-	if (doi != NULL)  { 
+	if (spot != NULL)  { 
 		// Go to the right level.
-		osl_doi_indent(file, level);
-		fprintf(file, "+-- osl_doi_t\n");
-    osl_doi_indent(file, level+2); 
+		osl_spot_indent(file, level);
+		fprintf(file, "+-- osl_spot_t\n");
+    osl_spot_indent(file, level+2); 
     fprintf(file, "\n");
-		osl_doi_indent(file, level+1);
-		fprintf(file, "+-- priority: %d\n", doi->priority);
-		osl_doi_indent(file, level+2);
+		osl_spot_indent(file, level+1);
+		fprintf(file, "+-- priority: %d\n", spot->priority);
+		osl_spot_indent(file, level+2);
 		fprintf(file, "\n");
-		osl_doi_indent(file, level+1);
-		fprintf(file, "+-- dom: %s\n", doi->dom);
-		osl_doi_indent(file, level+2);
+		osl_spot_indent(file, level+1);
+		fprintf(file, "+-- dom: %s\n", spot->dom);
+		osl_spot_indent(file, level+2);
 		fprintf(file, "\n");
-		osl_doi_indent(file, level+1);
-		if (doi->comp != NULL) 
-			fprintf(file, "+-- comp: %s\n", doi->comp);
+		osl_spot_indent(file, level+1);
+		if (spot->comp != NULL) 
+			fprintf(file, "+-- comp: %s\n", spot->comp);
 		else 
 			fprintf(file, "+-- NULL comp\n");
-		doi = doi->next; 
+		spot = spot->next; 
 	}
 	
-	while (doi != NULL)  { 
+	while (spot != NULL)  { 
 		// Go to the right level.
-		osl_doi_indent(file, level+1); fprintf(file, "V\n");
-		osl_doi_indent(file, level);
-		fprintf(file, "|   osl_doi_t\n");
-    osl_doi_indent(file, level+2); fprintf(file, "\n");
-		osl_doi_indent(file, level+1);
-		fprintf(file, "+-- priority: %d\n", doi->priority);
-		osl_doi_indent(file, level+2); fprintf(file, "\n");
-		osl_doi_indent(file, level+1);
-		fprintf(file, "+-- dom: %s\n", doi->dom);
-		osl_doi_indent(file, level+2); fprintf(file, "\n");
-		osl_doi_indent(file, level+1);
-		if (doi->comp != NULL) 
-			fprintf(file, "+-- comp: %s\n", doi->comp);
+		osl_spot_indent(file, level+1); fprintf(file, "V\n");
+		osl_spot_indent(file, level);
+		fprintf(file, "|   osl_spot_t\n");
+    osl_spot_indent(file, level+2); fprintf(file, "\n");
+		osl_spot_indent(file, level+1);
+		fprintf(file, "+-- priority: %d\n", spot->priority);
+		osl_spot_indent(file, level+2); fprintf(file, "\n");
+		osl_spot_indent(file, level+1);
+		fprintf(file, "+-- dom: %s\n", spot->dom);
+		osl_spot_indent(file, level+2); fprintf(file, "\n");
+		osl_spot_indent(file, level+1);
+		if (spot->comp != NULL) 
+			fprintf(file, "+-- comp: %s\n", spot->comp);
 		else 
 			fprintf(file, "+-- NULL comp\n");
-		osl_doi_indent(file, level+2);
+		osl_spot_indent(file, level+2);
 		fprintf(file, "\n");
-		doi = doi->next; 
+		spot = spot->next; 
 	}
   
   // The last line.
-  osl_doi_indent(file, level+1);
+  osl_spot_indent(file, level+1);
   fprintf(file, "\n");
 }
 
 /**
- * osl_doi_dump function:
- * this function prints the content of an osl_doi_t structure
- * (*doi) into a file (file, possibly stdout).
+ * osl_spot_dump function:
+ * this function prints the content of an osl_spot_t structure
+ * (*spot) into a file (file, possibly stdout).
  * \param[in] file    The file where the information has to be printed.
- * \param[in] doi The doi structure to print.
+ * \param[in] spot The spot structure to print.
  */
-void osl_doi_dump(FILE * file, osl_doi_p doi) {
-  osl_doi_idump(file, doi, 0);
+void osl_spot_dump(FILE * file, osl_spot_p spot) {
+  osl_spot_idump(file, spot, 0);
 }
 
 /**
- * osl_doi_sprint function:
- * this function prints the content of an osl_doi_t structure
- * (*doi) into a string (returned) in the OpenScop textual format.
- * \param[in] doi The doi structure to print.
- * \return A string containing the OpenScop dump of the doi structure.
+ * osl_spot_sprint function:
+ * this function prints the content of an osl_spot_t structure
+ * (*spot) into a string (returned) in the OpenScop textual format.
+ * \param[in] spot The spot structure to print.
+ * \return A string containing the OpenScop dump of the spot structure.
  */
-char * osl_doi_sprint(osl_doi_p doi) {
+char * osl_spot_sprint(osl_spot_p spot) {
   int high_water_mark = OSL_MAX_STRING;
   char * string = NULL;
   char buffer[OSL_MAX_STRING];
 
 	OSL_malloc(string, char *, high_water_mark * sizeof(char));
 
-	sprintf(string, "%d\n", osl_doi_length(doi)); 
+	sprintf(string, "%d\n", osl_spot_length(spot)); 
 			
-	while (doi != NULL) {
-    sprintf(buffer, "# priority\n%d\n", doi->priority); 
+	while (spot != NULL) {
+    sprintf(buffer, "# priority\n%d\n", spot->priority); 
     osl_util_safe_strcat(&string, buffer, &high_water_mark);
-    sprintf(buffer, "# isl domain\n%s\n", doi->dom); 
+    sprintf(buffer, "# isl domain\n%s\n", spot->dom); 
     osl_util_safe_strcat(&string, buffer, &high_water_mark);
     sprintf(buffer, "# c computation\n%s\n", 
-			(doi->comp != NULL) ? doi->comp : OSL_DOI_NULL);
+			(spot->comp != NULL) ? spot->comp : OSL_SPOT_NULL);
     osl_util_safe_strcat(&string, buffer, &high_water_mark);
-    doi = doi->next;
+    spot = spot->next;
   }
   // Keep only the memory space we need.
   OSL_realloc(string, char *, (strlen(string) + 1) * sizeof(char));
@@ -199,44 +199,44 @@ char * osl_doi_sprint(osl_doi_p doi) {
  *                               Reading function                            *
  *****************************************************************************/
 
-osl_doi_p osl_doi_sread_e(char *buffer, char **input) { 
-		osl_doi_p doi;
+osl_spot_p osl_spot_sread_e(char *buffer, char **input) { 
+		osl_spot_p spot;
 
-		doi = osl_doi_malloc();
+		spot = osl_spot_malloc();
 		// read priority
 		osl_util_sskip_blank_and_comments(input);
 		osl_util_sreadl(input, buffer); 
-		doi->priority = atoi(buffer);
+		spot->priority = atoi(buffer);
 		// read domain
 		osl_util_sskip_blank_and_comments(input);
 		osl_util_sreadl(input, buffer);
-		doi->dom = osl_util_strdup(buffer);
+		spot->dom = osl_util_strdup(buffer);
 		// read computation
 		osl_util_sskip_blank_and_comments(input);
 		osl_util_sreadl(input, buffer); 
-		if (strcmp(buffer, OSL_DOI_NULL) != 0) 
-			doi->comp = osl_util_strdup(buffer);
+		if (strcmp(buffer, OSL_SPOT_NULL) != 0) 
+			spot->comp = osl_util_strdup(buffer);
 		
-		return doi; 
+		return spot; 
 }
 
 /**
- * osl_doi_sread function:
- * this function reads a doi structure from a string complying to the
- * OpenScop textual format and returns a pointer to this doi structure.
+ * osl_spot_sread function:
+ * this function reads a spot structure from a string complying to the
+ * OpenScop textual format and returns a pointer to this spot structure.
  * The input parameter is updated to the position in the input string this
- * function reach right after reading the doi structure.
- * \param[in,out] input The input string where to find a doi.
+ * function reach right after reading the spot structure.
+ * \param[in,out] input The input string where to find a spot.
  *                      Updated to the position after what has been read.
- * \return A pointer to the doi structure that has been read.
+ * \return A pointer to the spot structure that has been read.
  */
-osl_doi_p osl_doi_sread(char ** input) {
-  osl_doi_p doi, doil;
+osl_spot_p osl_spot_sread(char ** input) {
+  osl_spot_p spot, spotl;
   char buffer[OSL_MAX_STRING];
 	int size;
 
   if (*input == NULL) {
-    OSL_debug("no doi optional tag");
+    OSL_debug("no spot optional tag");
     return NULL;
   }
   
@@ -249,21 +249,21 @@ osl_doi_p osl_doi_sread(char ** input) {
   size = atoi(buffer); 
 	// scan the list
 	if (size > 0) {
-		doi = doil = osl_doi_sread_e(buffer, input);
+		spot = spotl = osl_spot_sread_e(buffer, input);
 		size--;   
 	} else 
 		return NULL; 
 	
 	while (size > 0) { 
-		doi->next = osl_doi_sread_e(buffer, input); 
-		doi = doi->next; 
+		spot->next = osl_spot_sread_e(buffer, input); 
+		spot = spot->next; 
 		size--; 
 	}
 	
 	// update the input pointer
   input += strlen(*input);
 
-  return doil; 
+  return spotl; 
 }	
 
 
@@ -272,38 +272,38 @@ osl_doi_p osl_doi_sread(char ** input) {
  *****************************************************************************/
 
 /**
- * osl_doi_malloc function:
- * this function allocates the necessary a space for a new osl_doi
+ * osl_spot_malloc function:
+ * this function allocates the necessary a space for a new osl_spot
  * structure. 
- * \return A pointer to the doi structure created
+ * \return A pointer to the spot structure created
  */ 
-osl_doi_p osl_doi_malloc() { 
-	osl_doi_p doi;
+osl_spot_p osl_spot_malloc() { 
+	osl_spot_p spot;
 	
-	OSL_malloc(doi, osl_doi_p, sizeof(osl_doi_t));
-	doi->priority=-1; 
-	doi->dom=NULL; 
-	doi->comp=NULL;
-	doi->user=NULL;
-	doi->next=NULL; 
-	return doi;
+	OSL_malloc(spot, osl_spot_p, sizeof(osl_spot_t));
+	spot->priority=-1; 
+	spot->dom=NULL; 
+	spot->comp=NULL;
+	spot->user=NULL;
+	spot->next=NULL; 
+	return spot;
 } 
 
 /**
- * osl_doi_free function:
- * this function frees the allocated memory for an osl_doi_t
+ * osl_spot_free function:
+ * this function frees the allocated memory for an osl_spot_t
  * structure.User purpose pointer will not be freed.  
- * \param[in,out] doi The pointer to the doi structure to free.
+ * \param[in,out] spot The pointer to the spot structure to free.
  */
-void osl_doi_free(osl_doi_p doi) { 
-	if (doi != NULL) {
-		if (doi->dom != NULL)
-			free(doi->dom);
-		if (doi->comp != NULL)
-			free(doi->comp);
-		if (doi->next != NULL) 
-			osl_doi_free(doi->next);
-		free(doi); 
+void osl_spot_free(osl_spot_p spot) { 
+	if (spot != NULL) {
+		if (spot->dom != NULL)
+			free(spot->dom);
+		if (spot->comp != NULL)
+			free(spot->comp);
+		if (spot->next != NULL) 
+			osl_spot_free(spot->next);
+		free(spot); 
 	}
 }
 
@@ -312,16 +312,16 @@ void osl_doi_free(osl_doi_p doi) {
  *****************************************************************************/
 
 /**
- * osl_doi_clone_e function: 
- * this function clones the head of the doi structure
- * \param[in] d The pointer to the doi structure 
+ * osl_spot_clone_e function: 
+ * this function clones the head of the spot structure
+ * \param[in] d The pointer to the spot structure 
  * \return A pointer to the clone of the head of the list
  */ 
-osl_doi_p osl_doi_clone_e(osl_doi_p d) {
-	osl_doi_p e; 
+osl_spot_p osl_spot_clone_e(osl_spot_p d) {
+	osl_spot_p e; 
 	if (d == NULL)
 		return NULL; 
-	e = osl_doi_malloc();
+	e = osl_spot_malloc();
 	e->priority = d->priority;
 	if (d->dom != NULL) 
 		e->dom = osl_util_strdup(d->dom);
@@ -331,18 +331,18 @@ osl_doi_p osl_doi_clone_e(osl_doi_p d) {
 }
 
 /**
- * osl_doi_clone function:
+ * osl_spot_clone function:
  * this function builds and returns a "hard copy" (not a pointer copy) of an
- * osl_doi_t data structure. User purpose pointer will not be cloned. 
- * \param[in] doi The pointer to the doi structure to clone.
- * \return A pointer to the clone of the doi structure.
+ * osl_spot_t data structure. User purpose pointer will not be cloned. 
+ * \param[in] spot The pointer to the spot structure to clone.
+ * \return A pointer to the clone of the spot structure.
  */
-osl_doi_p osl_doi_clone(osl_doi_p  doi) { 
-	osl_doi_p clone, di; 
-	di = clone = osl_doi_clone_e(doi); 
-	while (doi != NULL) { 
-		doi = doi->next; 
-		di->next = osl_doi_clone_e(doi);
+osl_spot_p osl_spot_clone(osl_spot_p  spot) { 
+	osl_spot_p clone, di; 
+	di = clone = osl_spot_clone_e(spot); 
+	while (spot != NULL) { 
+		spot = spot->next; 
+		di->next = osl_spot_clone_e(spot);
 		di = di->next;
 	}
 	return clone;
@@ -350,15 +350,15 @@ osl_doi_p osl_doi_clone(osl_doi_p  doi) {
 
 
 /**
- * osl_doi_equal function:
- * this function returns true if the two doi structures are the same
+ * osl_spot_equal function:
+ * this function returns true if the two spot structures are the same
  * (content-wise), false otherwise. User purpose pointer will not be 
  * compared.  
- * \param[in] d1  The first doi structure.
- * \param[in] d2  The second doi structure.
+ * \param[in] d1  The first spot structure.
+ * \param[in] d2  The second spot structure.
  * \return 1 if d1 and d2 are the same (content-wise), 0 otherwise.
  */
-int osl_doi_equal(osl_doi_p d1, osl_doi_p d2) { 
+int osl_spot_equal(osl_spot_p d1, osl_spot_p d2) { 
 	if (d1 == d2) { 
 		return 1; 
 	}
@@ -379,12 +379,12 @@ int osl_doi_equal(osl_doi_p d1, osl_doi_p d2) {
 }
 
 /** 
- * osl_doi_length function:
- * calculates the lenght of the doi list
- * \param[in] d  The doi list
+ * osl_spot_length function:
+ * calculates the lenght of the spot list
+ * \param[in] d  The spot list
  * \return An integer containing the length of the list
  */ 
-int osl_doi_length(osl_doi_p d) { 
+int osl_spot_length(osl_spot_p d) { 
 	int len = 0; 
 	while (d != NULL) { 
 		len++;
@@ -394,42 +394,42 @@ int osl_doi_length(osl_doi_p d) {
 }
 
 /** 
- * osl_doi_concat function:
- * this function will concatenate two lists of dois
- * \param[in] d1  The first doi list 
- * \param[in] d2  The second doi list
+ * osl_spot_concat function:
+ * this function will concatenate two lists of spots
+ * \param[in] d1  The first spot list 
+ * \param[in] d2  The second spot list
  * \return A pointer to the new list
  */
-osl_doi_p osl_doi_concat(osl_doi_p d1, osl_doi_p d2) {
-	osl_doi_p doit;
+osl_spot_p osl_spot_concat(osl_spot_p d1, osl_spot_p d2) {
+	osl_spot_p spott;
  
 	// get the last element of d1
-	for (doit = d1; doit != NULL && doit->next != NULL; doit=doit->next)
+	for (spott = d1; spott != NULL && spott->next != NULL; spott=spott->next)
 		; 
-	if (doit == NULL) 
+	if (spott == NULL) 
 		return d2; 
 	// link the end of d1 with the beginning of d2
-	doit->next = d2; 
+	spott->next = d2; 
 	return d1; 
 }
 		
 /**
- * osl_doi_interface function:
- * this function creates an interface structure corresponding to the doi
+ * osl_spot_interface function:
+ * this function creates an interface structure corresponding to the spot
  * extension and returns it).
- * \return An interface structure for the doi extension.
+ * \return An interface structure for the spot extension.
  */
-osl_interface_p osl_doi_interface() {
+osl_interface_p osl_spot_interface() {
   osl_interface_p interface = osl_interface_malloc();
   
-  OSL_strdup(interface->URI, OSL_URI_DOI);
-  interface->idump  = (osl_idump_f)osl_doi_idump;
-  interface->sprint = (osl_sprint_f)osl_doi_sprint;
-  interface->sread  = (osl_sread_f)osl_doi_sread;
-  interface->malloc = (osl_malloc_f)osl_doi_malloc;
-  interface->free   = (osl_free_f)osl_doi_free;
-  interface->clone  = (osl_clone_f)osl_doi_clone;
-  interface->equal  = (osl_equal_f)osl_doi_equal;
+  OSL_strdup(interface->URI, OSL_URI_SPOT);
+  interface->idump  = (osl_idump_f)osl_spot_idump;
+  interface->sprint = (osl_sprint_f)osl_spot_sprint;
+  interface->sread  = (osl_sread_f)osl_spot_sread;
+  interface->malloc = (osl_malloc_f)osl_spot_malloc;
+  interface->free   = (osl_free_f)osl_spot_free;
+  interface->clone  = (osl_clone_f)osl_spot_clone;
+  interface->equal  = (osl_equal_f)osl_spot_equal;
 
   return interface;
 }

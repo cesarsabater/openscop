@@ -73,7 +73,7 @@
 
 # define OSL_RELEASE "@PACKAGE_VERSION@"
 
-# include <osl/extensions/doi.h>
+# include <osl/extensions/spot.h>
 # include <osl/relation.h>
 # include <osl/interface.h>
 # include <osl/generic.h>
